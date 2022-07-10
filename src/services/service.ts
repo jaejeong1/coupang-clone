@@ -1,18 +1,20 @@
-import axios from "axios";
 import cookies from "js-cookie";
 
 class Service {
+    accessToken = "accessToken";
+    refreshToken = "refreshToken";
+
     getAccessToken(): string | undefined {
-        return cookies.get("accessToken");
+        return cookies.get(this.accessToken);
     }
 
     getRefreshToken(): string | undefined {
-        return cookies.get("refreshToken");
+        return cookies.get(this.refreshToken);
     }
 
     setTokens(accessToken: string, refreshToken: string): void {
-        cookies.set("accessToken", accessToken, { expires: 1 });
-        cookies.set("refreshToken", refreshToken, { expires: 7 });
+        cookies.set(this.accessToken, accessToken, { expires: 1 });
+        cookies.set(this.refreshToken, refreshToken, { expires: 7 });
     }
 }
 
