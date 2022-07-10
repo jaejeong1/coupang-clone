@@ -1,4 +1,3 @@
-import axios from "axios";
 import Service from "./service";
 
 type SignupAgreements = {
@@ -20,16 +19,7 @@ class AuthService extends Service {
       return;
     }
 
-    const { data } = await axios.post(
-      process.env.NEXT_PUBLIC_API_HOST + "/auth/refresh",
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      }
-    );
-    
+    const { data } = await this.post('/auth/refresh', null, refreshToken);
     this.setTokens(data.access, data.refresh);
   }
 
@@ -41,8 +31,8 @@ class AuthService extends Service {
     phoneNumber: string,
     agreements: SignupAgreements
   ) {
-    const { data } = await axios.post(
-      process.env.NEXT_PUBLIC_API_HOST + "/auth/signup",
+    const { data } = await this.post(
+      "/auth/signup",
       { email, password, name, phoneNumber, agreements }
     );
 
@@ -51,8 +41,8 @@ class AuthService extends Service {
 
   /** 이미 생성된 계정의 토큰을 발급받습니다. */
   async login(email: string, password: string) {
-    const { data } = await axios.post(
-      process.env.NEXT_PUBLIC_API_HOST + "/auth/login",
+    const { data } = await this.post(
+      "/auth/login",
       { email, password }
     );
 
